@@ -1,5 +1,5 @@
 [package]
-name = "neural-network"
+name = "genetic-algorithm"
 version = "0.1.0"
 authors = ["joshshipton <shiptonjosh@gmail.com>"]
 edition = "2018"
@@ -11,4 +11,4 @@ rand = "0.8"
 
 [dev-dependencies]
 rand_chacha = "0.3"
-
+maplit = "1.0"
