@@ -1,24 +1,23 @@
 // the neural net struct, a network is just a collection of layers
 pub struct Network {
-    layers: Vec<Layer>
+    layers: Vec<Layer>,
 }
 
-pub struct LayerTopology
-{
+pub struct LayerTopology {
     // each layer will have neurons for input and neurons for output
-    pub input_neurons: usize, 
-    pub output_neurons: usize, 
+    pub input_neurons: usize,
+    pub output_neurons: usize,
 }
 
 // and each layer is a colllection of neurons
 struct Layer {
-    neurons: Vec<Neuron>
+    neurons: Vec<Neuron>,
 }
 
-// a beuron has a bias and then a collection of weights, a bias is 
+// a beuron has a bias and then a collection of weights, a bias is
 // " Bias is like a neuron's if statement - it allows for a neuron to stay inactive (return an output of zero) unless the input is strong (high) enough. Formally we'd say that bias allows to regulate neuron's activation threshold. "
 struct Neuron {
-    bias: f32, 
+    bias: f32,
     // Each neuron has multiple weights, one for each input.
     weights: Vec<f32>,
 }
@@ -29,39 +28,32 @@ impl Network {
     pub fn propagate(&self, mut inputs: Vec<f32>) -> Vec<f32> {
         // Iteratively apply the propagate function of each layer to the inputs.
         // The result of each layer's propagation is passed as input to the next layer.
-        self.layers.iter().fold(inputs, |inputs, layer| layer.propagate(inputs))
+        self.layers
+            .iter()
+            .fold(inputs, |inputs, layer| layer.propagate(inputs))
     }
-    pub fn new(layers: Vec<LayerTopology>) -> Self{
-        Self {layers}
+    pub fn new(layers: Vec<LayerTopology>) -> Self {
+        Self { layers }
     }
-    pub fn random(layers: &[LayerTopology]) -> Self{
+    pub fn random(layers: &[LayerTopology]) -> Self {
         assert!(layers.len() > 1);
- 
+
         let mut built_layers = Vec::new();
 
         for adjacent_layers in layers.windows(2) {
-        let input_size = adjacent_layers[0].neurons;
-        let output_size = adjacent_layers[1].neurons;
+            let input_size = adjacent_layers[0].neurons;
+            let output_size = adjacent_layers[1].neurons;
 
-        built_layers.push(Layer::random(
-            input_size,
-            output_size,
-        ));
+            built_layers.push(Layer::random(input_size, output_size));
             let layers = layers
-        .windows(2)
-        .map(|layers| {
-            Layer::random(layers[0].neurons, layers[1].neurons)
-        })
-        .collect();
+                .windows(2)
+                .map(|layers| Layer::random(layers[0].neurons, layers[1].neurons))
+                .collect();
 
-    Self { LayerTopology }
-    }
-
-
+            Self { LayerTopology }
+        }
     }
 }
-
-
 
 // Implementation block for the Layer struct.
 impl Layer {
@@ -81,12 +73,12 @@ impl Layer {
         outputs
     }
     pub fn random(input_size: usize, output_size: usize) -> Self {
-    let neurons = (0..output_size)
-        .map(|_| Neuron::random(input_size))
-        .collect();
+        let neurons = (0..output_size)
+            .map(|_| Neuron::random(input_size))
+            .collect();
 
-    Self { neurons }
-}
+        Self { neurons }
+    }
 }
 
 // Implementation block for the Neuron struct.
@@ -105,15 +97,12 @@ impl Neuron {
         (self.bias + output).max(0.0)
     }
     pub fn random(input_size: usize) -> Self {
-    let mut rng = rand::thread_rng();
+        let mut rng = rand::thread_rng();
 
-    let bias = rng.gen_range(-1.0..=1.0);
+        let bias = rng.gen_range(-1.0..=1.0);
 
-    let weights = (0..input_size)
-        .map(|_| rng.gen_range(-1.0..=1.0))
-        .collect();
+        let weights = (0..input_size).map(|_| rng.gen_range(-1.0..=1.0)).collect();
 
-    Self { bias, weights }
+        Self { bias, weights }
+    }
 }
-}
-
