@@ -34,21 +34,14 @@ impl Layer{
 }
 
 
-impl Neuron{
-fn propagate(&self, inputs: &[f32]) -> f32 {
-    assert_eq!(inputs.len(), self.weights.len());
+impl Neuron {
+    fn propagate(&self, inputs: &[f32]) -> f32 {
+        let output = inputs
+            .iter()
+            .zip(&self.weights)
+            .map(|(input, weight)| input * weight)
+            .sum::<f32>();
 
-    let mut output = 0.0;
-
-    for i in 0..inputs.len() {
-        output += inputs[i] * self.weights[i];
+        (self.bias + output).max(0.0)
     }
-
-    output += self.bias;
-
-    if output > 0.0 {
-        output
-    } else {
-        0.0
-    }
-}}
+}
