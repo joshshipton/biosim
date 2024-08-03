@@ -2,16 +2,6 @@
 #include <stdlib.h>
 #include "neural_network.h"
 
-// forward decleration so complier deosnt get mad
-typedef struct Layer Layer;
-typedef struct Neuron Neuron;
-typedef struct Network Network;
-
-typedef struct LayerTopology{
-  int input_neurons;
-  int output_neurons;
-}LayerTopology;
-
 // Network struct to represent the entire NN
 typedef struct Network{
   Layer *layers; // Pointer to array of layers
