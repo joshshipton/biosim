@@ -1,25 +1,32 @@
 #ifndef NEURAL_NETWORK_H
 #define NEURAL_NETWORK_H
 
-#include <stdio.h>
-#include <stdlib.h>
+typedef struct Neuron {
+    float bias;
+    float *weights;
+    int num_weights;
+} Neuron;
 
-typedef struct Network Network;
-typedef struct Layer Layer;
-typedef struct Neuron Neuron;
+typedef struct Layer {
+    Neuron *neurons;
+    int num_neurons;
+} Layer;
 
+typedef struct Network {
+    Layer *layers;
+    int num_layers;
+} Network;
 
-typedef struct LayerTopology{
-  int input_neurons;
-  int output_neurons;
-}LayerTopology;
+typedef struct LayerTopology {
+    int input_neurons;
+    int output_neurons;
+} LayerTopology;
 
-
-
-// Function declarations
+float activation_function(float x);
+float random_float();
+float* propagate(Network* network, float* inputs, int input_size);
+void initialize_neuron(Neuron* neuron, int num_inputs);
+Layer initialize_layer(int num_neurons, int num_inputs);
 Network initialize_network(LayerTopology* topologies, int num_layers);
 
-float* propagate(Network* network, float* inputs, int input_size);
-void free_network(Network* network);
-
-#endif
+#endif // NEURAL_NETWORK_H

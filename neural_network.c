@@ -2,30 +2,6 @@
 #include <stdlib.h>
 #include "neural_network.h"
 
-// Network struct to represent the entire NN
-typedef struct Network{
-  Layer *layers; // Pointer to array of layers
-  int num_layers;
-} Network;
-
-
-// Struct to represent a single layer in the network
-typedef struct Layer{
-  Neuron *neurons; // pointer to an array of neruons (in this layer)
-  int num_neurons;
-} Layer;
-
-// a neuron has a bunch of weights and a bias
-// weights determine the strength of the connection between the neurons
-// Each weight corresponds to an input coming into the neuron from the previous layer
-// the bias is added to the sum of the weifghts before the result is passed to the activation_function helps shift it to the left or right
-typedef struct Neuron{
-  float bias;  // singular bias value
-  float *weights; // pointer to an array of weights
-  int num_weights;
-} Neuron;
-
-
 // f(x) = max(0,x)
 // solves a bunch of problems that I don't quite understand yet ngl
 // This is called "rectified linear unit (ReLU)
