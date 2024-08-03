@@ -1,14 +1,14 @@
-tinclude <stdio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "neural_network.h"
 
 // forward decleration so complier deosnt get mad
 typedef struct Layer Layer;
 typedef struct Neuron Neuron;
 typedef struct Network Network;
-typedef struct LayerTopology;
-
 
 typedef struct LayerTopology{
-  int input_neruons;
+  int input_neurons;
   int output_neurons;
 }LayerTopology;
 
@@ -46,7 +46,7 @@ float activation_function(float x){
 
 // helper function to generate a random float between -1 and 1
 float random_float(){
-  return (float)rand / (float)RAND_MAX * 2 - 1
+  return ((float)rand() / RAND_MAX) * 2-1;
 }
 
 
@@ -86,22 +86,6 @@ float* propagate(Network* network, float* inputs, int input_size){
   return current_inputs;
 }
 
-float random(LayerTopology* layers){
-  int random_number = rand();
-
-  float* built_layers =  malloc(sizeof(layers->)]))
-    for(int i=0; i,layers->number_of_layers; i++){
-      int input_size = layers[i].neurons;
-      int output_sisze = layers[i+1].neurons;
-
-      built_layers[i] = layers::random(input_size, output_size)
-
-
-    }
-
-}
-
-
 // Function to initialize a single neuron
 void initialize_neuron(Neuron* neuron, int num_inputs) {
     neuron->bias = random_float();
@@ -135,13 +119,6 @@ Network initialize_network(LayerTopology* topologies, int num_layers) {
     }
 
     return network;
-}
-
-
-int main(){
-    // create an instance of the network
-    Network network;
-    return 0;
 }
 
 
